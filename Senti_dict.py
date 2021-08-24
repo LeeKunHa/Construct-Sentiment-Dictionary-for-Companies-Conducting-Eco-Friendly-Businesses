@@ -11,8 +11,6 @@ from sklearn.metrics import accuracy_score
 
 
 features = 5000
-okt = Okt()
-
 file_path = './data/stopwords.txt'
 with open(file_path,'r') as op:
     stopwords = op.readlines()
@@ -20,6 +18,7 @@ with open(file_path,'r') as op:
 
 
 def tokenizer(text):
+    okt = Okt()
     re.sub('[\W]',' ',text)
     result = []
     token_pos = okt.pos(text)

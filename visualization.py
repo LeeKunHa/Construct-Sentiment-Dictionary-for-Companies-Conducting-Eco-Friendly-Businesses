@@ -75,22 +75,30 @@ def mk_input(tf_idf):
     df = df.reset_index(drop=True)
     return df
 
-def draw(df,sent, keyword, length):
-    font_family='NanumSquareRound'
-    print(keyword, length)
-    dataset = df[df['word1'].isin(keyword)]
+
+def draw(df, sent, keywords, length):
+    # 폰트설정
+    font_family = 'NanumSquareRound'
+    cmap = 'jet'
+
+    print(keywords, length)
+    dataset = pd.DataFrame()
+
+    # 데이터 셋에서 키워드 추출
+    for keyword in keywords:
+        dataset = pd.concat([dataset, df[df['word1'] == keyword][:length]])
     print(dataset)
     G_centrality = nx.Graph()
 
-    # 빈도수가 20000 이상인 단어쌍에 대해서만 edge(간선)을 표현한다.
-    for ind in list(dataset.index)[:length]:
+    # 데이터 셋에 관하여 엣지 추가
+    for ind in list(dataset.index):
         G_centrality.add_edge(dataset['word1'][ind], dataset['word2'][ind], weight=int(dataset['freq'][ind]))
 
-    dgr = nx.degree_centrality(G_centrality)        # 연결 중심성
-    btw = nx.betweenness_centrality(G_centrality)   # 매개 중심성
-    cls = nx.closeness_centrality(G_centrality)     # 근접 중심성
-    egv = nx.eigenvector_centrality(G_centrality)   # 고유벡터 중심성
-    pgr = nx.pagerank(G_centrality)                 # 페이지 랭크
+    dgr = nx.degree_centrality(G_centrality)  # 연결 중심성
+    btw = nx.betweenness_centrality(G_centrality)  # 매개 중심성
+    cls = nx.closeness_centrality(G_centrality)  # 근접 중심성
+    egv = nx.eigenvector_centrality(G_centrality)  # 고유벡터 중심성
+    pgr = nx.pagerank(G_centrality)  # 페이지 랭크
 
     sorted_dgr = sorted(dgr.items(), key=operator.itemgetter(1), reverse=True)
     sorted_btw = sorted(btw.items(), key=operator.itemgetter(1), reverse=True)
@@ -99,30 +107,28 @@ def draw(df,sent, keyword, length):
     sorted_pgr = sorted(pgr.items(), key=operator.itemgetter(1), reverse=True)
 
     G = nx.Graph()
-    
-    for i in range(len(sorted_pgr)): # 페이지 랭크에 따른 노드 추가, 노드 사이즈는 연결 중심성으로 결정
-        G.add_node(sorted_pgr[i][0], nodesize=sorted_dgr[i][1],color='r')
 
-    for ind in list(dataset.index)[:length]: # 같이 나온 빈도수가 많을 수록 가까움
+    for i in range(len(sorted_pgr)):  # 페이지 랭크에 따른 노드 추가, 노드 사이즈는 연결 중심성으로 결정
+        G.add_node(sorted_pgr[i][0], nodesize=sorted_dgr[i][1], color='r')
+    for ind in list(dataset.index):  # 같이 나온 빈도수가 많을 수록 가까움
         G.add_weighted_edges_from([(dataset['word1'][ind], dataset['word2'][ind], int(dataset['freq'][ind]))])
-        
-        
+
     # 단어별 감성 점수 추출
     words = list(G.nodes)
     sent_points = []
     word_points = {}
     for word in words:
-        try: # 감성 사전에 단어가 있다면
+        try:  # 감성 사전에 단어가 있다면
             sent_point = float(sent[sent['단어'] == word]['points'].values)
             word_points[word] = sent_point
             sent_points.append(sent_point)
-        except: # 감성 사전에 단어가 없다면 0점
+        except:  # 감성 사전에 단어가 없다면 0점
             word_points[word] = 0
-            sent_points.append(0) 
-    
+            sent_points.append(0)
+    sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=-1, vmax=1))
 
     # 노드 크기 조정
-    sizes = [G.nodes[node]['nodesize'] * 5000+1000 for node in G] 
+    sizes = [G.nodes[node]['nodesize'] * 5000 + 1000 for node in G]
 
     # 옵션
     options = {
@@ -130,17 +136,17 @@ def draw(df,sent, keyword, length):
         'width': 1,
         'with_labels': True,
         'font_weight': 'regular',
-        'cmap' : 'jet',
-        'node_color' : sent_points,
-        'alpha' : 0.5
+        'cmap': cmap,
+        'node_color': sent_points,
+        'alpha': 0.5
     }
 
-
-    plt.figure(figsize=(8,5))
+    plt.figure(figsize=(8, 5))
     nx.draw(G, node_size=sizes,
             pos=nx.spring_layout(G, k=3.5, iterations=100), **options, font_family=font_family)  # font_family로 폰트 등록
     ax = plt.gca()
     ax.collections[0].set_edgecolor("#555555")
+    plt.colorbar(sm)
     plt.show()
     return word_points
 
@@ -170,4 +176,3 @@ def words_freq_update():
     sns_tf_idf = mk_tfidf(sns_data)
     sns_words_freq = mk_input(sns_tf_idf)
     sns_words_freq.to_csv('./Data/sns_words_freq.csv',encoding='cp949')
-
