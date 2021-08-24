@@ -11,7 +11,7 @@ import operator
 import networkx as nx
 import matplotlib.pyplot as plt
 
-features=1000
+features=5000
 file_path = './data/stopwords.txt'
 with open(file_path,'r') as op:
     stopwords = op.readlines()

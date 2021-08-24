@@ -10,7 +10,7 @@ from sklearn.linear_model import LogisticRegressionCV
 from sklearn.metrics import accuracy_score
 
 
-features = 1000
+features = 5000
 okt = Okt()
 
 file_path = './data/stopwords.txt'
