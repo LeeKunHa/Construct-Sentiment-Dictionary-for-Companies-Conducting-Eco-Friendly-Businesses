@@ -1,3 +1,5 @@
+import naver_dailynews_crawler as ndn
+
 #웹페이지 분석을 위한 라이브러리 입니다.
 from bs4 import BeautifulSoup
 #크롬드라이버를 사용하기 위한 라이브러리입니다.
@@ -24,11 +26,6 @@ import numpy as np
 def twitter_crawler(driver, path):
     # 사용자의 경로를 가져옵니다.
     sys.path.append(os.pardir)
-    # 크롬을 실행할때 창으로 띄우지 않고, 눈에 안보인느 상태로 크롤링을 해옵니다.
-    options = webdriver.ChromeOptions()
-    options.add_argument("headless")
-
-    # 사용쟈의 chrome driver경로 입니다.
 
     key_path = './api_key.json'
     with open(key_path, 'r') as f:
@@ -149,9 +146,7 @@ def insta_crawling(driver, keyword, target):
         except:
             time.sleep(1)
             next_page(driver)
-    print(result_list)
     df = pd.DataFrame(result_list)
-    print(df)
     df.columns = ['내용', '해시태그']
     df['내용'] = df['내용'].apply(lambda x: clean_text(x))
     df['해시태그'] = df['해시태그'].apply(lambda x: str(x))
@@ -161,11 +156,11 @@ def insta_crawling(driver, keyword, target):
     df = df.drop_duplicates(subset=['내용'])
     return df
 
-def sns_main(key_word,page,driver):
+def sns_main(key_word,page):
     key_path = './api_key.json'
     with open(key_path, 'r') as f:
         key = json.load(f)
-
+    driver = webdriver.Chrome(path)
     # 개인정보 인증을 요청하는 Handler입니다.
     auth = tweepy.OAuthHandler(key['CONSUMER_KEY'], key['CONSUMER_SECRET'])
     # 인증 요청을 수행합니다.
@@ -174,6 +169,7 @@ def sns_main(key_word,page,driver):
     api = tweepy.API(auth, wait_on_rate_limit=True)
 
     insta_crawler(driver)
+
     for i in key_word:
         keyword = i
         target = page*100
@@ -181,7 +177,7 @@ def sns_main(key_word,page,driver):
         time.sleep(1)
         twitter_df = twitter_crawling(keyword,api,target)
         sns_df = pd.concat([twitter_df, insta_df], join='outer', ignore_index=True)
-        sns_df.to_csv(i+'_sns.csv', encoding='utf-8-sig')
+        sns_df.to_csv('../Data/crawling data/'+i+'_sns.csv', encoding='utf-8-sig')
 
 
 # 뽐뿌 웹사이트 크롤러 입니다.
@@ -215,7 +211,7 @@ def ppomppu_crawler(query, driver_path, page):
                                 'body > div > div.contents > div.container > div > form > div > div:nth-of-type(' + str(
                                     j) + ') > div > span > a'))
                 except:
-                    print('error link')
+                    print('')
 
         for k in range(len(post_links)):
             try:  # 게시물 안에서 입력된 텍스트들을 가져옵니다(게시물 본문)
@@ -226,7 +222,7 @@ def ppomppu_crawler(query, driver_path, page):
                 temp = soup.find_all('td', class_='board-contents')
                 text.append(clean_text(temp[0].text))
             except:
-                print('error link : ', post_links[k])
+                print('')
 
     driver.close()
     return text
@@ -331,7 +327,7 @@ def nate_pann_crawler(query, driver_path, page):
                 temp = soup.select('#contentArea')[0].text
                 text.append(clean_text(temp))
             except:
-                print('error link : ', post_links[k])
+                print('')
 
     driver.close()
     return text
@@ -369,7 +365,7 @@ def dc(query, driver_path, page):
                 text.append(clean_text(temp))
             except:
 
-                print('error_link: ', post_links[k])
+                print('')
     driver.close()
     return text
 
@@ -402,7 +398,6 @@ def ruli(query, driver_path, page):
     return text
 
 
-
 def community_crawler(key_word,page,driver_path):
     text = []
     for i in key_word:
@@ -422,20 +417,41 @@ def community_crawler(key_word,page,driver_path):
         df.drop(drop_index,inplace=True)
 
         #긁어온 데이터를 csv파일로 저장합니다.
-        df.to_csv(i+'_community.csv',encoding='cp949')
+        df.to_csv('../Data/crawling data/'+i+'_community.csv',encoding='utf-8-sig')
 
-if __name__ == "__main__":
-    key_word = ['환경오염','친환경']
+def news_crawler(key_word,page,path):
+    for i in key_word:
+        news_df = ndn.crawling_news(i, path, page + 1)
+        df_len = len(news_df)
+        news_df.to_csv('../Data/crawling data/' + i + '_news.csv', encoding='utf-8-sig')
+        news_split_df = ndn.create_news_df_split(df_len,news_df)
+        news_split_df.to_csv('../Data/crawling data/' + i + '_news_split.csv', encoding='utf-8-sig')
+
+def run_crawler():
+    key_word = ['환경오염', '친환경']
     # 사용자의 경로를 가져옵니다.
     sys.path.append(os.pardir)
-    path = './chromedriver'
+    # 맥 사용시
+    # path = './chromedriver'
 
-    update = input('기업 환경 사전 구축 시스템에 오신것을 환영합니다!\n사전을 업데이트 하시겠습니까?\nY or N 으로 입력.')
-    if update == ('Y' or 'y'):
-        page = input('크롤링 해올 페이지 수를 입력하세요!')
-        driver = webdriver.Chrome(path)
+    # 윈도우 사용시
+    path = './chromedriver.exe'
+
+    update = input('기업 환경 사전 구축 시스템에 오신것을 환영합니다!\n사전을 업데이트 하시겠습니까?\nY or N 으로 입력.\n')
+    if update == 'Y' or update == 'y':
+        page = int(input('크롤링 해올 페이지 수를 입력하세요!\n'))
+
         community_crawler(key_word, page, path)
-        sns_main(key_word, page, driver)
-    elif update == ('N' or 'n'):
+        sns_main(key_word, page)
+        news_crawler(key_word, page,path)
+
+        print('크롤링 완료 !!\n')
+
+    elif update == 'N' or update == 'n':
         print('기존 사전으로 분석을 시작하겠습니다.')
+
+
+if __name__ == "__main__":
+    run_crawler()
+
 

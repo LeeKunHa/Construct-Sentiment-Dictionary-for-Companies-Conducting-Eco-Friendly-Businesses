@@ -29,7 +29,7 @@ def biz_khan(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         # 달라지는 url 기준으로 변수설정해서 url 가져오기
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
@@ -60,7 +60,7 @@ def biz_khan(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)
+            driver = webdriver.Chrome(executable_path=driver_path)
             time.sleep(2)  # 로딩되는 시간 설정(2초)
             driver.get(url)
             time.sleep(2)
@@ -105,7 +105,7 @@ def kmib(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1005&nso=so%3Ar%2Cp%3Aall&is_sug_officeid=0'
@@ -132,7 +132,7 @@ def kmib(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)
+            driver = webdriver.Chrome(executable_path=driver_path)
             time.sleep(2)
             driver.get(url)
             time.sleep(2)
@@ -170,7 +170,7 @@ def naeil(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=2312&nso=&is_sug_officeid=0'
@@ -197,7 +197,7 @@ def naeil(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)
+            driver = webdriver.Chrome(executable_path=driver_path)
             time.sleep(2)
             driver.get(url)
             time.sleep(2)
@@ -234,7 +234,7 @@ def donga(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1020&nso=&is_sug_officeid=0'
@@ -262,7 +262,7 @@ def donga(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)
+            driver = webdriver.Chrome(executable_path=driver_path)
 
             try:
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -302,7 +302,7 @@ def m_i(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=2385&nso=so%3Ar%2Cp%3Aall%2Ca%3Aall&is_sug_officeid=0'
@@ -330,7 +330,7 @@ def m_i(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)
+            driver = webdriver.Chrome(executable_path=driver_path)
 
             try:
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -364,7 +364,7 @@ def munhwa(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '%EB%89%B4%EC%8A%A4&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1021&nso=&is_sug_officeid=0'
@@ -392,7 +392,7 @@ def munhwa(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)
+            driver = webdriver.Chrome(executable_path=driver_path)
 
             try:
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -436,7 +436,7 @@ def seoul(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '%EB%89%B4%EC%8A%A4&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1081&nso=&is_sug_officeid=0'
@@ -463,7 +463,7 @@ def seoul(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)
+            driver = webdriver.Chrome(executable_path=driver_path)
             time.sleep(2)
             driver.get(url)
             time.sleep(2)
@@ -500,7 +500,7 @@ def segye(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1022&nso=&is_sug_officeid=0'
@@ -560,7 +560,7 @@ def asiatoday(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=2268&nso=&is_sug_officeid=0'
@@ -620,7 +620,7 @@ def alldays(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=2844&nso=&is_sug_officeid=0'
@@ -648,7 +648,7 @@ def alldays(query, driver_path, page):
                 continue
 
             try:
-                driver = webdriver.Chrome(executable_path=driver_path, options=options)
+                driver = webdriver.Chrome(executable_path=driver_path)
                 driver.get(url)
                 time.sleep(2)
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -681,7 +681,7 @@ def joseon(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1023&nso=&is_sug_officeid=0'
@@ -709,7 +709,7 @@ def joseon(query, driver_path, page):
                 continue
 
             try:
-                driver = webdriver.Chrome(executable_path=driver_path, options=options)
+                driver = webdriver.Chrome(executable_path=driver_path)
                 driver.get(url)
                 time.sleep(2)
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -744,7 +744,7 @@ def chungang(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1025&nso=&is_sug_officeid=0'
@@ -772,7 +772,7 @@ def chungang(query, driver_path, page):
                 continue
 
             try:
-                driver = webdriver.Chrome(executable_path=driver_path, options=options)
+                driver = webdriver.Chrome(executable_path=driver_path)
                 time.sleep(2)
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
                 head = clean_text(soup.select('#article_title')[0].text)
@@ -804,7 +804,7 @@ def newscj(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=2041&nso=&is_sug_officeid=0'
@@ -832,7 +832,7 @@ def newscj(query, driver_path, page):
                 continue
 
             try:
-                driver = webdriver.Chrome(executable_path=driver_path, options=options)
+                driver = webdriver.Chrome(executable_path=driver_path)
                 driver.get(url)
                 time.sleep(2)
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -865,7 +865,7 @@ def hani(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1028&nso=&is_sug_officeid=0'
@@ -893,7 +893,7 @@ def hani(query, driver_path, page):
                 continue
 
             try:
-                driver = webdriver.Chrome(executable_path=driver_path, options=options)
+                driver = webdriver.Chrome(executable_path=driver_path)
                 driver.get(url)
                 time.sleep(2)
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -926,7 +926,7 @@ def hankook(query, driver_path, page):
 
     while current_page < last_page:
 
-        driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        driver = webdriver.Chrome(executable_path=driver_path)
 
         url_domain = 'https://search.naver.com/search.naver?where=news&query='
         news_domain = '%EB%89%B4%EC%8A%A4&sm=tab_opt&sort=0&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=1&office_type=1&office_section_code=1&news_office_checked=1469&nso=&is_sug_officeid=0'
@@ -953,7 +953,7 @@ def hankook(query, driver_path, page):
             if url == 'None':
                 continue
 
-            driver = webdriver.Chrome(executable_path=driver_path, options=options)  # for Windows
+            driver = webdriver.Chrome(executable_path=driver_path)  # for Windows
             driver.get(url)
             time.sleep(2)
 
@@ -978,7 +978,7 @@ def hankook(query, driver_path, page):
 
 
 # 원하는 keyword와 페이지 수 설정해서 크롤링
-def crawling_news(query,max_page):
+def crawling_news(query,driver_path,max_page):
     biz_df = biz_khan(query,driver_path,max_page)
     kmib_df = kmib(query,driver_path,max_page)
     naeil_df = naeil(query,driver_path,max_page)
@@ -1016,10 +1016,10 @@ def crawling_news(query,max_page):
 
 
 # 라벨링할 문장 split하는 함수
-def create_news_df_split(df_len):
+def create_news_df_split(df_len,news_df):
     text = []
     count = 0  # 의미없는변수 (except를 위해만듬)
-
+    tp=''
     for x in range(0, df_len):
 
         try:  # '다'를 기준으로 문장을 나눔
@@ -1042,16 +1042,15 @@ def create_news_df_split(df_len):
 
 ##############메인#################
 
-options = webdriver.ChromeOptions()
-options.add_argument("headless")
-
+#
 # 각자 chromedriver.exe 경로 수정
-driver_path = 'C:/Users/chaeh/chromedriver.exe'
+if __name__ == '__main__':
+    driver_path = './chromedriver.exe'
 
-news_df = crawling_news('친환경',2)
+    news_df = crawling_news('친환경',2)
 
-df_len = len(news_df)
-news_df.to_csv('친환경_news.csv', encoding='utf-8-sig')
+    df_len = len(news_df)
+    news_df.to_csv('친환경_news.csv', encoding='utf-8-sig')
 
-news_split_df=create_news_df_split(df_len)
-news_split_df.to_csv('친환경_news_split.csv',encoding='utf-8-sig')
+    news_split_df=create_news_df_split(df_len)
+    news_split_df.to_csv('친환경_news_split.csv',encoding='utf-8-sig')
