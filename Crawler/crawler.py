@@ -1,6 +1,6 @@
-from crawler import naver_dailynews_crawler as ndn
-from Senti_dict import update_dict
-from visualization import words_freq_update
+from Crawler import naver_dailynews_crawler as ndn
+from Sentiment_dictionary import Senti_dict
+from Visualization import visualization
 #웹페이지 분석을 위한 라이브러리 입니다.
 from bs4 import BeautifulSoup
 #크롬드라이버를 사용하기 위한 라이브러리입니다.
@@ -448,12 +448,14 @@ def run_crawler():
 
         print('크롤링 완료 !!\n')
         print('감성사전, 단어 빈도수를 업데이트합니다 !!\n')
-        update_dict()
-        words_freq_update()
+        Senti_dict.update_dict()
+        visualization.words_freq_update()
 
     elif update == 'N' or update == 'n':
         print('기존 사전으로 분석을 시작하겠습니다.')
-
+    else:
+        print('다시 실행해주세요')
+        exit(0)
 
 if __name__ == "__main__":
     run_crawler()
