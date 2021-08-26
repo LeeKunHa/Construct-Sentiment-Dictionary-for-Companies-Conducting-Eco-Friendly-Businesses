@@ -10,7 +10,7 @@ from sklearn.linear_model import LogisticRegressionCV
 from sklearn.metrics import accuracy_score
 
 
-features = 5000
+features = 4000
 file_path = './data/stopwords.txt'
 with open(file_path,'r') as op:
     stopwords = op.readlines()
@@ -29,7 +29,7 @@ def tokenizer(text):
 
 
 def update_dict():
-    data = pd.read_csv('./Data/labeling_data.csv',encoding='cp949')
+    data = pd.read_csv('./Data/labeling_data.csv',encoding='utf-8-sig')
     x = data['내용'].astype('str')
     y = data['label']
 
@@ -61,5 +61,5 @@ def update_dict():
     st_pos['points']=st_pos['회귀계수'].apply(lambda x : ((x - mi)/(ma - mi)))
 
     st_df = st_pos.append(st_neg)
-    st_df.to_csv('./data/dict.csv',encoding='cp949')
+    st_df.to_csv('./data/dict'+str(features)+'.csv',encoding='utf-8-sig')
 

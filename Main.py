@@ -1,5 +1,6 @@
 from Visualization import visualization
 from Crawler import crawler as cr
+from Sentiment_dictionary import Senti_dict as sd
 
 import pandas as pd
 
@@ -7,8 +8,10 @@ if __name__ == "__main__":
     dict_data_path = './Data/dict.csv'
     stopwords_path = './Data/stopwords.txt'
     # 만약 감성사전, 단어빈도수 데이터 업데이트 필요 시에 사용
-    cr.run_crawler()
+    #cr.run_crawler()
 
+    sd.update_dict()
+    visualization.words_freq_update()
     # 감성사전, 불용어 정보
     sent_dict = pd.read_csv(dict_data_path,encoding='cp949')
     with open(stopwords_path,'r') as op:

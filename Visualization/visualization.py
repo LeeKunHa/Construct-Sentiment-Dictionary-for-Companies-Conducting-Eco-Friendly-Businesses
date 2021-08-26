@@ -11,7 +11,7 @@ import operator
 import networkx as nx
 import matplotlib.pyplot as plt
 
-features=5000
+features=4000
 file_path = './data/stopwords.txt'
 with open(file_path,'r') as op:
     stopwords = op.readlines()
@@ -135,7 +135,7 @@ def draw(df, sent, keywords, length):
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=-1, vmax=1))
 
     # 노드 크기 조정
-    sizes = [G.nodes[node]['nodesize'] * 5000 + 2000 for node in G]
+    sizes = [G.nodes[node]['nodesize'] * 5000 + 1000 for node in G]
 
     # 옵션
     options = {
@@ -148,7 +148,7 @@ def draw(df, sent, keywords, length):
         'alpha': 0.8
     }
 
-    plt.figure(figsize=(3, 3))
+    plt.figure(figsize=(8, 8))
     nx.draw(G, node_size=sizes,
             pos=nx.spring_layout(G, k=3.5, iterations=100), **options, font_family=font_family)  # font_family로 폰트 등록
     ax = plt.gca()
@@ -159,27 +159,27 @@ def draw(df, sent, keywords, length):
 
 def words_freq_update():
     stopwords_path = './data/stopwords.txt'
-    sent = pd.read_csv('./data/dict.csv',encoding='cp949')
+    sent = pd.read_csv('./data/dict.csv',encoding='utf-8-sig')
     with open(stopwords_path,'r') as op:
         stopwords = op.readlines()
         stopwords = stopwords[0].split(',')
 
-    news = pd.concat([pd.read_csv('Data/crawling data/친환경_news.csv',encoding='cp949'),pd.read_csv('Data/crawling data/환경오염_news.csv',encoding='cp949')])
+    news = pd.concat([pd.read_csv('Data/crawling data/친환경_news.csv',encoding='utf-8-sig'),pd.read_csv('Data/crawling data/환경오염_news.csv',encoding='utf-8-sig')])
     news_data = clean_tokenizing(news)
     news_tf_idf = mk_tfidf(news_data)
     news_words_freq = mk_input(news_tf_idf)
-    news_words_freq.to_csv('./Data/news_words_freq.csv',encoding='cp949')
+    news_words_freq.to_csv('./Data/news_words_freq'+str(features)+'.csv',encoding='utf-8-sig')
 
 
-    community = pd.concat([pd.read_csv('Data/crawling data/친환경_community.csv',encoding='cp949'),pd.read_csv('Data/crawling data/환경오염_community.csv')])
+    community = pd.concat([pd.read_csv('Data/crawling data/친환경_community.csv',encoding='utf-8-sig'),pd.read_csv('Data/crawling data/환경오염_community.csv',encoding='utf-8-sig')])
     community_data = clean_tokenizing(community)
     community_tf_idf = mk_tfidf(community_data)
     community_words_freq = mk_input(community_tf_idf)
-    community_words_freq.to_csv('./Data/community_words_freq.csv',encoding='cp949')
+    community_words_freq.to_csv('./Data/community_words_freq'+str(features)+'.csv',encoding='utf-8-sig')
 
 
-    sns = pd.concat([pd.read_csv('Data/crawling data/친환경_sns.csv'),pd.read_csv('Data/crawling data/환경오염_sns.csv')])
+    sns = pd.concat([pd.read_csv('Data/crawling data/친환경_sns.csv',encoding='utf-8-sig'),pd.read_csv('Data/crawling data/환경오염_sns.csv',encoding='utf-8-sig')])
     sns_data = clean_tokenizing(sns)
     sns_tf_idf = mk_tfidf(sns_data)
     sns_words_freq = mk_input(sns_tf_idf)
-    sns_words_freq.to_csv('./Data/sns_words_freq.csv',encoding='cp949')
+    sns_words_freq.to_csv('./Data/sns_words_freq'+str(features)+'.csv',encoding='utf-8-sig')
