@@ -1,6 +1,8 @@
 # 2021 상명대학교 데이터 청년 캠퍼스  3조
 
 
+
+
 ## 프로젝트 주제
 
 친환경 사업을 진행하는 기업 이미지를 위한 감성 사전 구축
@@ -25,7 +27,7 @@ sns, 커뮤니티, 뉴스기사(naver_dailynews_crawler.py)를 통합해서 만�
 
 예시 이미지)
 
-![](https://github.com/Data-campus-SloganAnalysis/Main/blob/main/img/1.png?raw=true)
+![](https://github.com/Data-campus-SloganAnalysis/Main/blob/main/img/1_.png?raw=true)
 
 
 
