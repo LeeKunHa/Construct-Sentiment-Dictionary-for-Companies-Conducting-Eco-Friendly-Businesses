@@ -2,6 +2,7 @@ import pandas as pd
 import re
 
 from konlpy.tag import Okt
+from eunjeon import Mecab
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
@@ -18,15 +19,28 @@ with open(file_path,'r') as op:
 
 
 def tokenizer(text):
-    okt = Okt()
+    #okt = Okt()
+    mecab = Mecab()
+    poses = ['NNG', 'NNP', 'NNB', 'NR', 'NP']
     re.sub('[\W]',' ',text)
     result = []
-    token_pos = okt.pos(text)
+    token_pos = mecab.pos(text)
     for word, pos in token_pos:
-        if (pos == 'Noun') and not(word in stopwords):
+        if (pos in poses) and not(word in stopwords):
             result.append(str(word))
     return result
 
+
+# tokenizer with Mecab
+# def tokenizer(text):
+#     #mecab = Mecab()
+#     okt = Okt()
+#     re.sub('[\W]',' ',text)
+#     nouns = okt.nouns(text)
+#     nouns = [noun for noun in nouns if not(noun in stopwords)]
+#     if len(nouns) == 0:
+#         return '0'
+#     return nouns
 
 def update_dict():
     data = pd.read_csv('./Data/labeling_data.csv',encoding='utf-8-sig')

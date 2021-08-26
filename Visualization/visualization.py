@@ -1,6 +1,6 @@
 import re
 
-from konlpy.tag import Okt,Mecab
+from konlpy.tag import Okt
 from sklearn.feature_extraction.text import CountVectorizer
 
 import pandas as pd
@@ -10,12 +10,10 @@ import operator
 
 import networkx as nx
 import matplotlib.pyplot as plt
+from eunjeon import Mecab
 
 features=4000
 file_path = './data/stopwords.txt'
-with open(file_path,'r') as op:
-    stopwords = op.readlines()
-    stopwords = stopwords[0].split(',')
 def clean_text(text):
     cleaned_text = re.sub('[^ ㄱ-ㅣ가-힣]+',' ',text) # 한국어, 스페이스바를 제외한 모든 문자 제거
     cleaned_text = ' '.join(cleaned_text.split()) # 너무 많은 공백이 생기므로 공백 1개로
@@ -23,6 +21,7 @@ def clean_text(text):
 
 def get_nouns(text):
     okt = Okt() # 형태소 분석기
+    pos = ['NNG','NNP','NNB','NR','NP']
     nouns = okt.nouns(text) # 명사 추출
     nouns = [word for word in nouns if not (word in stopwords)] # 불용어 제거
     nouns = [word for word in nouns if len(word)>1] # 길이가 1 이상만 추출
@@ -32,7 +31,7 @@ def clean_tokenizing(data):
     data = data.dropna() # 결측값 제거
     data['내용'] = data['내용'].apply(lambda x: clean_text(x)) # 한국어만 추출
     data['명사'] = data['내용'].apply(lambda x: get_nouns(x)) # 명사만 추출
-    
+
     drop_index_list = [] # 지워버릴 index를 담는 리스트
     for i, row in data.iterrows():
         temp_nouns = row['명사']
@@ -42,8 +41,36 @@ def clean_tokenizing(data):
     data.index = range(len(data))
     return data
 
+
+
+with open(file_path,'r') as op:
+    stopwords = op.readlines()
+    stopwords = stopwords[0].split(',')
+# tokenizer with Mecab
+# def tokenizer(text):
+#     mecab = Mecab()
+#     text = str(text)
+#     #okt = Okt()
+#     re.sub('[^ ㄱ-ㅣ가-힣]+',' ',text)
+#     nouns = mecab.nouns(text)
+#     nouns = [noun for noun in nouns if not(noun in stopwords)]
+#     if len(nouns) == 0:
+#         return '0'
+#     return nouns
+# def tokenizer(text):
+#     #okt = Okt()
+#     mecab = Mecab()
+#     poses = ['NNG', 'NNP', 'NNB', 'NR', 'NP']
+#     re.sub('[\W]',' ',text)
+#     result = []
+#     token_pos = mecab.pos(text)
+#     for word, pos in token_pos:
+#         if (pos in poses) and not(word in stopwords):
+#             result.append(str(word))
+#     return result
 def mk_tfidf(data):
-    cv = CountVectorizer(max_features=features, tokenizer=get_nouns) # data의 tf-idf 구축, tokenizer로 get_nouns 사용
+#    data['내용'] = data['내용'].apply(lambda x: tokenizer(str(x)))
+    cv = CountVectorizer(max_features=features,tokenizer = get_nouns) # data의 tf-idf 구축, tokenizer로 get_nouns 사용
     tdm = cv.fit_transform(data['내용']) # 위의 파라미터 수에 맞게 tdm 생성
     dataset = pd.DataFrame(data=tdm.todense(),columns=cv.get_feature_names())
     return dataset
