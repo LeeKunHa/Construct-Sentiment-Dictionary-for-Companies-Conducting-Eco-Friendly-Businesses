@@ -8,8 +8,8 @@ if __name__ == "__main__":
     dict_data_path = './Data/dict.csv'
     stopwords_path = './Data/stopwords.txt'
     # 만약 감성사전, 단어빈도수 데이터 업데이트 필요 시에 사용
-    visualization.words_freq_update()
-    #sd.update_dict()
+    # visualization.words_freq_update()
+    # sd.update_dict()
     #cr.run_crawler()
     # 감성사전, 불용어 정보
     sent_dict = pd.read_csv(dict_data_path,encoding='utf-8-sig')
@@ -32,19 +32,19 @@ if __name__ == "__main__":
             if keyword != '#':
                 inputs.append(keyword)
             else:
-                visualization.draw(news_data, sent_dict, inputs, 8)
+                visualization.draw(news_data, sent_dict, inputs, 15)
                 break
         elif do == 'sns':
             keyword = input('검색어를 입력하세요. 마치고 싶으면 # 을 입력하세요\n')
             if keyword != '#':
                 inputs.append(keyword)
             else:
-                visualization.draw(sns_data, sent_dict, inputs, 8)
+                visualization.draw(sns_data, sent_dict, inputs, 15)
                 break
         else:
             keyword = input('검색어를 입력하세요. 마치고 싶으면 # 을 입력하세요\n')
             if keyword != '#':
                 inputs.append(keyword)
             else:
-                visualization.draw(community_data, sent_dict, inputs, 8)
+                visualization.draw(community_data, sent_dict, inputs, 15)
                 break

@@ -47,7 +47,7 @@ with open(file_path,'r') as op:
     stopwords = stopwords[0].split(',')
 
 def mk_tfidf(data):
-    cv = CountVectorizer(max_features=features) # data의 tf-idf 구축, tokenizer로 get_nouns 사용
+    cv = CountVectorizer(max_features=features,tokenizer=get_nouns) # data의 tf-idf 구축, tokenizer로 get_nouns 사용
     tdm = cv.fit_transform(data['내용']) # 위의 파라미터 수에 맞게 tdm 생성
     dataset = pd.DataFrame(data=tdm.todense(),columns=cv.get_feature_names())
     return dataset
@@ -153,7 +153,7 @@ def draw(df, sent, keywords, length):
     ax.collections[0].set_edgecolor("#555555")
     #plt.colorbar(sm)
     plt.show()
-    return word_points
+    return 0
 
 def words_freq_update():
     stopwords_path = './data/stopwords.txt'
