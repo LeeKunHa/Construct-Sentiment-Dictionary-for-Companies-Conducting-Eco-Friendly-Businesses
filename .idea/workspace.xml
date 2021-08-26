@@ -4,9 +4,9 @@
     <list default="true" id="cbbfcdc9-9079-4a0f-887c-3d157933a8e0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/community_words_freq.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Data/community_words_freq.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/news_words_freq.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Data/news_words_freq.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/sns_words_freq.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Data/sns_words_freq.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/visualization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/crawling data/친환경_community.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Data/crawling data/친환경_community.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/crawling data/환경오염_community.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Data/crawling data/환경오염_community.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/stopwords.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Data/stopwords.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
