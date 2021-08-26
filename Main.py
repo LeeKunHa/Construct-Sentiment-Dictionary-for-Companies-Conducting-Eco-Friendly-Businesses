@@ -8,10 +8,9 @@ if __name__ == "__main__":
     dict_data_path = './Data/dict.csv'
     stopwords_path = './Data/stopwords.txt'
     # 만약 감성사전, 단어빈도수 데이터 업데이트 필요 시에 사용
-    #cr.run_crawler()
-    #
-    sd.update_dict()
     visualization.words_freq_update()
+    #sd.update_dict()
+    #cr.run_crawler()
     # 감성사전, 불용어 정보
     sent_dict = pd.read_csv(dict_data_path,encoding='utf-8-sig')
     with open(stopwords_path,'r') as op:

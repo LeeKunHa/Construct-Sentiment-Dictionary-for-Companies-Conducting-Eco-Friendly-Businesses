@@ -11,7 +11,7 @@ from sklearn.linear_model import LogisticRegressionCV
 from sklearn.metrics import accuracy_score
 
 
-features = 4000
+features = 5000
 file_path = './data/stopwords.txt'
 with open(file_path,'r') as op:
     stopwords = op.readlines()
@@ -31,16 +31,6 @@ def tokenizer(text):
     return result
 
 
-# tokenizer with Mecab
-# def tokenizer(text):
-#     #mecab = Mecab()
-#     okt = Okt()
-#     re.sub('[\W]',' ',text)
-#     nouns = okt.nouns(text)
-#     nouns = [noun for noun in nouns if not(noun in stopwords)]
-#     if len(nouns) == 0:
-#         return '0'
-#     return nouns
 
 def update_dict():
     data = pd.read_csv('./Data/labeling_data.csv',encoding='utf-8-sig')

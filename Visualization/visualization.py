@@ -12,7 +12,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from eunjeon import Mecab
 
-features=4000
+features=5000
 file_path = './data/stopwords.txt'
 def clean_text(text):
     cleaned_text = re.sub('[^ ㄱ-ㅣ가-힣]+',' ',text) # 한국어, 스페이스바를 제외한 모든 문자 제거
@@ -20,9 +20,8 @@ def clean_text(text):
     return cleaned_text
 
 def get_nouns(text):
-    okt = Okt() # 형태소 분석기
-    pos = ['NNG','NNP','NNB','NR','NP']
-    nouns = okt.nouns(text) # 명사 추출
+    mecab = Mecab()
+    nouns = mecab.nouns(text) # 명사 추출
     nouns = [word for word in nouns if not (word in stopwords)] # 불용어 제거
     nouns = [word for word in nouns if len(word)>1] # 길이가 1 이상만 추출
     return nouns
@@ -46,31 +45,9 @@ def clean_tokenizing(data):
 with open(file_path,'r') as op:
     stopwords = op.readlines()
     stopwords = stopwords[0].split(',')
-# tokenizer with Mecab
-# def tokenizer(text):
-#     mecab = Mecab()
-#     text = str(text)
-#     #okt = Okt()
-#     re.sub('[^ ㄱ-ㅣ가-힣]+',' ',text)
-#     nouns = mecab.nouns(text)
-#     nouns = [noun for noun in nouns if not(noun in stopwords)]
-#     if len(nouns) == 0:
-#         return '0'
-#     return nouns
-# def tokenizer(text):
-#     #okt = Okt()
-#     mecab = Mecab()
-#     poses = ['NNG', 'NNP', 'NNB', 'NR', 'NP']
-#     re.sub('[\W]',' ',text)
-#     result = []
-#     token_pos = mecab.pos(text)
-#     for word, pos in token_pos:
-#         if (pos in poses) and not(word in stopwords):
-#             result.append(str(word))
-#     return result
+
 def mk_tfidf(data):
-#    data['내용'] = data['내용'].apply(lambda x: tokenizer(str(x)))
-    cv = CountVectorizer(max_features=features,tokenizer = get_nouns) # data의 tf-idf 구축, tokenizer로 get_nouns 사용
+    cv = CountVectorizer(max_features=features) # data의 tf-idf 구축, tokenizer로 get_nouns 사용
     tdm = cv.fit_transform(data['내용']) # 위의 파라미터 수에 맞게 tdm 생성
     dataset = pd.DataFrame(data=tdm.todense(),columns=cv.get_feature_names())
     return dataset
@@ -129,15 +106,9 @@ def draw(df, sent, keywords, length):
         G_centrality.add_edge(dataset['word1'][ind], dataset['word2'][ind], weight=int(dataset['freq'][ind]))
 
     dgr = nx.degree_centrality(G_centrality)  # 연결 중심성
-    btw = nx.betweenness_centrality(G_centrality)  # 매개 중심성
-    cls = nx.closeness_centrality(G_centrality)  # 근접 중심성
-    egv = nx.eigenvector_centrality(G_centrality)  # 고유벡터 중심성
     pgr = nx.pagerank(G_centrality)  # 페이지 랭크
 
     sorted_dgr = sorted(dgr.items(), key=operator.itemgetter(1), reverse=True)
-    sorted_btw = sorted(btw.items(), key=operator.itemgetter(1), reverse=True)
-    sorted_cls = sorted(cls.items(), key=operator.itemgetter(1), reverse=True)
-    sorted_egv = sorted(egv.items(), key=operator.itemgetter(1), reverse=True)
     sorted_pgr = sorted(pgr.items(), key=operator.itemgetter(1), reverse=True)
 
     G = nx.Graph()
@@ -195,18 +166,18 @@ def words_freq_update():
     news_data = clean_tokenizing(news)
     news_tf_idf = mk_tfidf(news_data)
     news_words_freq = mk_input(news_tf_idf)
-    news_words_freq.to_csv('./Data/news_words_freq'+str(features)+'.csv',encoding='utf-8-sig')
+    news_words_freq.to_csv('./Data/news_words_freq.csv',encoding='utf-8-sig')
 
 
     community = pd.concat([pd.read_csv('Data/crawling data/친환경_community.csv',encoding='utf-8-sig'),pd.read_csv('Data/crawling data/환경오염_community.csv',encoding='utf-8-sig')])
     community_data = clean_tokenizing(community)
     community_tf_idf = mk_tfidf(community_data)
     community_words_freq = mk_input(community_tf_idf)
-    community_words_freq.to_csv('./Data/community_words_freq'+str(features)+'.csv',encoding='utf-8-sig')
+    community_words_freq.to_csv('./Data/community_words_freq.csv',encoding='utf-8-sig')
 
 
     sns = pd.concat([pd.read_csv('Data/crawling data/친환경_sns.csv',encoding='utf-8-sig'),pd.read_csv('Data/crawling data/환경오염_sns.csv',encoding='utf-8-sig')])
     sns_data = clean_tokenizing(sns)
     sns_tf_idf = mk_tfidf(sns_data)
     sns_words_freq = mk_input(sns_tf_idf)
-    sns_words_freq.to_csv('./Data/sns_words_freq'+str(features)+'.csv',encoding='utf-8-sig')
+    sns_words_freq.to_csv('./Data/sns_words_freq.csv',encoding='utf-8-sig')
