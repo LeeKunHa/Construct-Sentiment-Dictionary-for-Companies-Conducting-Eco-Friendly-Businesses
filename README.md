@@ -1,3 +1,21 @@
+## 설치환경
+
+IDE: Pycharm
+
+사용언어 : python
+
+### 라이브러리
+
+- konlpy : https://www.lfd.uci.edu/~gohlke/pythonlibs/#jpype 에서 자신의 파이썬 버전에 알맞는 Jpype 설치후 환경변수로 Jpype directory 설정 (관련 문서 :https://konlpy-ko.readthedocs.io/ko/v0.4.3/install/#id2)
+
+- Mecab : **visual studio 2019가 없는 경우 **
+
+  https://visualstudio.microsoft.com/ko/vs/older-downloads/ 에서 '재배포 가능 패키지 및 빌드 도구' 의 Microsoft Build Tools 2015 업데이트 3 를 다운로드 (관련 블로그 :https://somjang.tistory.com/entry/Windows-%EC%97%90%EC%84%9C-Mecab-mecab-%EA%B8%B0%EB%B0%98-%ED%95%9C%EA%B5%AD%EC%96%B4-%ED%98%95%ED%83%9C%EC%86%8C-%EB%B6%84%EC%84%9D%EA%B8%B0-%EC%84%A4%EC%B9%98%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)
+
+- 그 후 설치해야 할 라이브러리의 정보와 버전이 있는 requirement.txt 를 파이참의 터미널에서 ``pip install -r requirement.txt`` 실행
+
+
+
 ## 코드 설명
 
 
